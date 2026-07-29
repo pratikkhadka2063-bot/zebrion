@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Published Articles - Zebrion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: #0c3d23; color: #ffffff;">
+
+    <div class="article-page-wrapper">
+        
+        <!-- 🎯 HEADER SECTION -->
+        <header class="page-header" style="text-align: center; padding: 40px 20px 20px 20px;">
+            <div class="header-container" style="max-width: 800px; margin: 0 auto;">
+                <a href="index.html" class="back-btn" style="display: inline-flex; align-items: center; gap: 8px; color: #4ade80; text-decoration: none; font-weight: 600; margin-bottom: 15px;">
+                    <i class="fas fa-arrow-left"></i> Home
+                </a>
+                <h1 style="font-size: 36px; margin-bottom: 10px;">All Published Articles</h1>
+                <p style="color: #cbdad2; font-size: 16px;">Browse through all inspiring biographies and stories</p>
+            </div>
+        </header>
+
+        <!-- 🔍 SEARCH, SORT, DATE & READING TIME FILTER SECTION -->
+        <div class="filter-section" style="max-width: 950px; margin: 0 auto 35px auto; padding: 0 20px;">
+            
+            <!-- 1. Search Bar + Sort Dropdown -->
+            <div style="display: flex; gap: 12px; margin-bottom: 15px; flex-wrap: wrap;">
+                
+                <!-- Search Input -->
+                <div class="search-box-wrapper" style="position: relative; flex: 1; min-width: 260px;">
+                    <i class="fas fa-search" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #4ade80; font-size: 16px;"></i>
+                    <input type="text" id="article-page-search" 
+                           placeholder="Search by title, person name, keyword, or tag..." 
+                           style="width: 100%; padding: 16px 20px 16px 50px; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px; color: #ffffff; font-size: 15px; outline: none; transition: all 0.3s ease;">
+                </div>
+
+                <!-- Sort By Dropdown -->
+                <div class="sort-box-wrapper" style="position: relative; min-width: 180px;">
+                    <i class="fas fa-sort-amount-down" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #4ade80; font-size: 15px; pointer-events: none;"></i>
+                    <select id="article-page-sort" onchange="applyAllFilters()" 
+                            style="width: 100%; padding: 16px 20px 16px 45px; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 30px; color: #ffffff; font-size: 14.5px; font-weight: 600; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none;">
+                        <option value="latest" style="background: #022c17; color: #fff;">Sort: Latest</option>
+                        <option value="oldest" style="background: #022c17; color: #fff;">Sort: Oldest</option>
+                        <option value="views" style="background: #022c17; color: #fff;">Most Viewed</option>
+                        <option value="likes" style="background: #022c17; color: #fff;">Most Liked</option>
+                        <option value="trending" style="background: #022c17; color: #fff;">Trending</option>
+                        <option value="editors_pick" style="background: #022c17; color: #fff;">Editor's Pick</option>
+                    </select>
+                    <i class="fas fa-chevron-down" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #a3b8ad; font-size: 12px; pointer-events: none;"></i>
+                </div>
+
+            </div>
+
+            <!-- 🎯 2. ADVANCED TIME & DATE FILTERS BAR (By Year, By Month, Reading Time) -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; background: rgba(255, 255, 255, 0.03); padding: 12px 20px; border-radius: 20px; border: 1px dashed rgba(255, 255, 255, 0.1);">
+                
+                <!-- Filter By Year -->
+                <div style="position: relative; min-width: 130px;">
+                    <select id="filter-year" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">All Years</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+
+                <!-- Filter By Month -->
+                <div style="position: relative; min-width: 140px;">
+                    <select id="filter-month" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">All Months</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+
+                <!-- Filter By Reading Time -->
+                <div style="position: relative; min-width: 180px;">
+                    <select id="filter-read-time" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">Any Reading Time</option>
+                        <option value="short">Under 3 min</option>
+                        <option value="medium">3 - 5 min</option>
+                        <option value="long">5+ min</option>
+                    </select>
+                </div>
+
+                <!-- Reset Filters Button -->
+                <button onclick="resetAllAdvancedFilters()" style="background: rgba(255, 255, 255, 0.08); color: #cbdad2; border: 1px solid rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                    <i class="fas fa-undo"></i> Reset Filters
+                </button>
+
+            </div>
+
+            <!-- 3. Category Filter Buttons -->
+            <div id="articles-page-cat-filters" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                <button class="art-cat-btn active" onclick="setCategoryFilter('ALL', this)">All</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('POLITICS', this)">Politics</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('ENTERTAINMENT', this)">Entertainment</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('SPORTS', this)">Sports</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('BUSINESS', this)">Business</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('EDUCATION', this)">Education</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('TECHNOLOGY', this)">Technology</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('INFLUENCERS', this)">Influencers</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('OTHER', this)">Other</button>
+            </div>
+
+        </div>
+
+        <!-- 🎯 ARTICLES GRID -->
+        <main class="main-container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px 60px 20px;">
+            <div id="all-articles-grid" class="responsive-article-grid" style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+            </div>
+        </main>
+
+        <!-- ↑ SCROLL TO TOP BUTTON -->
+        <button class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                style="position: fixed; bottom: 30px; right: 30px; background: #4ade80; color: #0c3d23; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            ↑
+        </button>
+    </div>
+
+    <!-- 🟢 SCRIPTS FOR DATABASE FETCH, SEARCH, CATEGORY, DATE, READING TIME & SORTING -->
+    <script>
+        const API_URL = "http://localhost:8080/api/articles";
+        let localArticles = [];
+        let activeCategory = 'ALL';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadArticlesFromDB();
+            setupGridSearch();
+        });
+
+        // ब्याकइन्डबाट सबै आर्टिकलहरू लोड गर्ने
+        function loadArticlesFromDB() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    localArticles = data;
+                    applyAllFilters();
+                })
+                .catch(err => {
+                    console.error("Error connecting to backend database:", err);
+                    document.getElementById('all-articles-grid').innerHTML = 
+                        `<p style='text-align:center; width:100%; color:#ff6b6b; font-weight:600; padding: 40px 0;'>
+                            <i class="fas fa-exclamation-triangle"></i> Error: Database Server चल्दै छैन!
+                         </p>`;
+                });
+        }
+
+        // क्याटेगोरी बटनमा क्लिक गर्दा चल्ने फङ्सन
+        function setCategoryFilter(category, buttonElement) {
+            activeCategory = category;
+
+            const allButtons = document.querySelectorAll('.art-cat-btn');
+            allButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = "rgba(255, 255, 255, 0.05)";
+                btn.style.color = "#cbdad2";
+            });
+
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+                buttonElement.style.background = "#4ade80";
+                buttonElement.style.color = "#0c3d23";
+            }
+
+            applyAllFilters();
+        }
+
+        // सबै फिल्टर रिसेट गर्ने फङ्सन
+        function resetAllAdvancedFilters() {
+            document.getElementById('article-page-search').value = "";
+            document.getElementById('filter-year').value = "ALL";
+            document.getElementById('filter-month').value = "ALL";
+            document.getElementById('filter-read-time').value = "ALL";
+            document.getElementById('article-page-sort').value = "latest";
+            applyAllFilters();
+        }
+
+        // सर्च इनपुट (Search Bar) को इभेन्ट लिसनर
+        function setupGridSearch() {
+            const searchInput = document.getElementById('article-page-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    applyAllFilters();
+                });
+            }
+        }
+
+        // 🎯 SEARCH, CATEGORY, YEAR, MONTH, READING TIME र SORT सबै मिलाएर काम गर्ने मुख्य फङ्सन
+        function applyAllFilters() {
+            const searchInput = document.getElementById('article-page-search');
+            const sortSelect = document.getElementById('article-page-sort');
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const readTimeSelect = document.getElementById('filter-read-time');
+            
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const sortType = sortSelect ? sortSelect.value : 'latest';
+            const selectedYear = yearSelect ? yearSelect.value : 'ALL';
+            const selectedMonth = monthSelect ? monthSelect.value : 'ALL';
+            const selectedReadTime = readTimeSelect ? readTimeSelect.value : 'ALL';
+
+            // १. फिल्टर गर्ने लजिक (Category + Search + Year + Month + Reading Time)
+            let filtered = localArticles.filter(art => {
+                // क. क्याटेगोरी म्याच
+                const matchesCategory = (activeCategory === 'ALL') || 
+                                      (art.category && art.category.toUpperCase() === activeCategory);
+
+                // ख. सर्च म्याच
+                const titleMatch = art.title ? art.title.toLowerCase().includes(query) : false;
+                const nameMatch = art.author ? art.author.toLowerCase().includes(query) : false;
+                const summaryMatch = art.summary ? art.summary.toLowerCase().includes(query) : false;
+                const contentMatch = art.content ? art.content.toLowerCase().includes(query) : false;
+                const tagMatch = Array.isArray(art.tags) ? art.tags.some(tag => tag.toLowerCase().includes(query)) : false;
+                const matchesSearch = !query || titleMatch || nameMatch || summaryMatch || contentMatch || tagMatch;
+
+                // ग. Year र Month म्याच (publishDate बाट मिति जाँच्ने)
+                const pubDateStr = art.publishDate || "2026-05-27"; // मिति नभए डिफल्ट
+                const matchesYear = (selectedYear === 'ALL') || pubDateStr.includes(selectedYear);
+                
+                // महिना चेक गर्न (जस्तै "05" वा "May")
+                let matchesMonth = true;
+                if (selectedMonth !== 'ALL') {
+                    const monthNames = {
+                        "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun",
+                        "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+                    };
+                    matchesMonth = pubDateStr.includes(`-${selectedMonth}-`) || 
+                                   pubDateStr.toLowerCase().includes(monthNames[selectedMonth].toLowerCase());
+                }
+
+                // घ. Reading Time म्याच (प्रति मिनेट २०० शब्दको आधारमा)
+                let matchesReadTime = true;
+                if (selectedReadTime !== 'ALL') {
+                    const fullText = art.content || art.summary || '';
+                    const wordCount = fullText.trim().split(/\s+/).length;
+                    const readMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+                    if (selectedReadTime === 'short') matchesReadTime = (readMinutes < 3);
+                    else if (selectedReadTime === 'medium') matchesReadTime = (readMinutes >= 3 && readMinutes <= 5);
+                    else if (selectedReadTime === 'long') matchesReadTime = (readMinutes > 5);
+                }
+
+                return matchesCategory && matchesSearch && matchesYear && matchesMonth && matchesReadTime;
+            });
+
+            // २. Sort Option अनुसार मिलाउने (Sorting Logic)
+            filtered.sort((a, b) => {
+                if (sortType === 'latest') {
+                    return b.id - a.id;
+                } else if (sortType === 'oldest') {
+                    return a.id - b.id;
+                } else if (sortType === 'views') {
+                    return (b.views || 0) - (a.views || 0);
+                } else if (sortType === 'likes') {
+                    return (b.likes || 0) - (a.likes || 0);
+                } else if (sortType === 'trending') {
+                    const trendB = (b.views || 0) + ((b.likes || 0) * 5);
+                    const trendA = (a.views || 0) + ((a.likes || 0) * 5);
+                    return trendB - trendA;
+                } else if (sortType === 'editors_pick') {
+                    const pickB = b.isEditorPick ? 1 : 0;
+                    const pickA = a.isEditorPick ? 1 : 0;
+                    if (pickB !== pickA) return pickB - pickA;
+                    return (b.views || 0) - (a.views || 0);
+                }
+                return 0;
+            });
+
+            renderArticlesGrid(filtered);
+        }
+
+        // ग्रिड युआई रेन्डर गर्ने फङ्सन (Full-Width Card Style)
+        function renderArticlesGrid(articles) {
+            const grid = document.getElementById('all-articles-grid');
+            grid.innerHTML = "";
+
+            if (articles.length === 0) {
+                grid.innerHTML = `<p style='text-align:center; width:100%; color:#cbdad2; padding: 40px 0;'>No articles found matching your selected filters.</p>`;
+                return;
+            }
+
+            articles.forEach(art => {
+                const card = document.createElement('div');
+                card.className = 'article-row-card';
+                card.style.cssText = "display: flex; width: 100%; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden; transition: all 0.3s ease;";
+                
+                let hoverLogic = "";
+                if (art.image2 && art.image2.trim() !== "") {
+                    hoverLogic = `
+                        onmouseover="const img = document.getElementById('grid-img-${art.id}'); img.style.opacity = '0.3'; setTimeout(() => { img.src='${art.image2}'; img.style.opacity = '1'; }, 150);"
+                        onmouseout="const img = document.getElementById('grid-img-${art.id}'); img.style.opacity = '0.3'; setTimeout(() => { img.src='${art.image}'; img.style.opacity = '1'; }, 150);"
+                    `;
+                }
+
+                // Reading Time हिसाब गर्ने
+                const fullText = art.content || art.summary || '';
+                const wordCount = fullText.trim().split(/\s+/).length;
+                const readMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+                card.innerHTML = `
+                    <div class="row-card-img" style="width: 280px; min-width: 280px; height: 180px;" ${hoverLogic}>
+                        <img id="grid-img-${art.id}" src="${art.image}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s ease;">
+                    </div>
+                    <div class="row-card-info" style="padding: 20px 25px; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span class="row-card-category" style="color: #4ade80; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                <i class="far fa-bookmark"></i> ${art.category || 'BIOGRAPHY'}
+                            </span>
+                            ${art.isEditorPick ? '<span style="background: rgba(226, 177, 60, 0.2); color: #e2b13c; font-size: 10.5px; font-weight: bold; padding: 3px 10px; border-radius: 12px;"><i class="fas fa-star"></i> EDITOR\'S PICK</span>' : ''}
+                        </div>
+                        <h2 style="font-size: 20px; color: #ffffff; margin: 0 0 8px 0; font-weight: 600; line-height: 1.3;">${art.title}</h2>
+                        <p class="row-card-summary" style="color: #a3b8ad; font-size: 14.5px; line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            ${art.summary || 'Click below to read the full details and history of this prominent figure.'}
+                        </p>
+                        <div class="row-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 12px; flex-wrap: wrap; gap: 10px;">
+                            <div>
+                                <span class="author-tag" style="color: #8da699; font-size: 13px; margin-right: 15px;"><i class="far fa-user"></i> By ${art.author || 'Admin'}</span>
+                                <span class="views-tag" style="color: #8da699; font-size: 13px; margin-right: 15px;"><i class="far fa-eye"></i> ${art.views || 0} views</span>
+                                <span style="color: #4ade80; font-size: 12.5px; font-weight: 600;"><i class="far fa-clock"></i> ${readMinutes} min read</span>
+                            </div>
+                            <a href="index.html?id=${art.id}" class="row-read-more" style="color: #4ade80; font-weight: 600; font-size: 14px; text-decoration: none;">Read Full Story →</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    </script>
+
+    <!-- 🎯 INLINE CSS FOR ADVANCED FILTERS & HOVER EFFECTS -->
+    <style>
+        .art-cat-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbdad2;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .art-cat-btn:hover {
+            background: rgba(74, 222, 128, 0.2) !important;
+            color: #ffffff !important;
+            border-color: #4ade80;
+            transform: translateY(-2px);
+        }
+        .adv-select {
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .adv-select:hover, .adv-select:focus {
+            border-color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+        }
+        .adv-select option {
+            background: #022c17;
+            color: #ffffff;
+        }
+        .article-row-card:hover {
+            background: #08351d !important;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        select#article-page-sort:focus {
+            border-color: #4ade80 !important;
+            box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+        }
+        @media (max-width: 768px) {
+            .article-row-card {
+                flex-direction: column !important;
+            }
+            .row-card-img {
+                width: 100% !important;
+                min-width: 100% !important;
+                height: 200px !important;
+            }
+        }
+    </style>
+
+</body>
+</html>
