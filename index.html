@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEBRION - Articles about public figures</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <button class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <div id="home-page">
+        <!-- 🎯 NAVBAR -->
+        <nav class="navbar">
+            <div class="logo" style="cursor: pointer;" onclick="resetToHome(true)">
+                <i class="fas fa-zebra" style="color: #ffffff;"></i>
+                <span>ZEBRION</span>
+            </div>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" class="active" onclick="resetToHome(true); event.preventDefault();">Home</a></li>
+                <li><a href="article.html">Articles</a></li>
+                <li class="horizontal-mega-wrapper">
+                    <a href="#" class="cat-trigger-btn">Categories <i class="fas fa-chevron-down dropdown-arrow"></i></a>
+                    <div class="dropdown-menu-horizontal">
+                        <a href="#"><i class="fas fa-landmark"></i> Politics</a>
+                        <a href="#"><i class="fas fa-clapperboard"></i> Entertainment</a>
+                        <a href="#"><i class="fas fa-running"></i> Sports</a>
+                        <a href="#"><i class="fas fa-briefcase"></i> Business</a>
+                        <a href="#"><i class="fas fa-graduation-cap"></i> Education</a>
+                        <a href="#"><i class="fas fa-microchip"></i> Technology</a>
+                        <a href="#"><i class="fas fa-users"></i> Influencers</a>
+                        <a href="#"><i class="fas fa-ellipsis-h"></i> Other</a>
+                    </div>
+                </li>
+                <li><a href="#" id="nav-about-btn" onclick="showPage('about'); event.preventDefault();">About</a></li>
+                <li><a href="#" onclick="showPage('contact'); event.preventDefault();">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- 🎯 HERO SECTION -->
+        <header class="hero-section">
+            <div class="hero-content">
+                <h1>Discover Inspiring Stories</h1>
+                <p>Read articles about Nepal's prominent personalities.</p>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search articles, names, categories...">
+                    <button id="search-btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+
+                <div class="trending-tags">
+                    <span><i class="fas fa-chart-line"></i> Trending <small>This Week</small></span>
+                    <span><i class="fas fa-clock"></i> Latest <small>Articles</small></span>
+                    <span><i class="fas fa-star"></i> Popular <small>Today</small></span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-container">
+            <section class="featured-section">
+                <div class="section-tag"></div>
+                <div id="featured-article-box" class="featured-grid"></div>
+            </section>
+
+            <section class="articles-section">
+                <div class="section-header">
+                    <h2>Latest Articles</h2>
+                    <a href="article.html" class="view-all-link">View all articles <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div id="articles-grid" class="latest-grid"></div>
+            </section>
+
+            <section class="popular-section">
+                <div class="section-header">
+                    <h2>Popular Personalities</h2>
+                    <a href="#" class="view-all-link">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="slider-wrapper">
+                    <button class="slider-arrow left"><i class="fas fa-chevron-left"></i></button>
+                    <div id="popular-grid" class="popular-slider-grid"></div>
+                    <button class="slider-arrow right"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section class="categories-browse-section">
+                <h2>Browse by Category</h2>
+                <div class="category-buttons-grid">
+                    <div class="cat-card"><i class="fas fa-landmark"></i> <span>Politics</span></div>
+                    <div class="cat-card"><i class="fas fa-clapperboard"></i> <span>Entertainment</span></div>
+                    <div class="cat-card"><i class="fas fa-running"></i> <span>Sports</span></div>
+                    <div class="cat-card"><i class="fas fa-briefcase"></i> <span>Business</span></div>
+                    <div class="cat-card"><i class="fas fa-graduation-cap"></i> <span>Education</span></div>
+                    <div class="cat-card"><i class="fas fa-microchip"></i> <span>Technology</span></div>
+                    <div class="cat-card"><i class="fas fa-users"></i> <span>Influencers</span></div>
+                    <div class="cat-card"><i class="fas fa-ellipsis-h"></i> <span>Other</span></div> 
+                </div>
+            </section>
+        </main>
+
+        <section class="alphabet-section">
+            <div class="main-container">
+                <h2>Search by Alphabet</h2>
+                <div class="alphabet-container">
+                    <script>
+                        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                        document.write(alphabets.map(letter => `<button class="alpha-btn">${letter}</button>`).join(""));
+                    </script>
+                </div>
+
+                <div class="info-footer-grid">
+                    <div class="about-box-card">
+                        <div class="icon-circle"><i class="fas fa-users-viewfinder"></i></div>
+                        <div>
+                            <h3>About Zebrion</h3>
+                            <p>Zebrion is a platform dedicated to sharing authentic and inspiring stories of public figures from Nepal and around the world. Our mission is to inform, inspire and connect.</p>
+                            <button class="learn-more-btn" onclick="showPage('about')">Learn more about us <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                   <div class="subscribe-box-card">
+                        <div class="icon-circle"><i class="far fa-envelope"></i></div>
+                        <div style="width: 100%;">
+                            <h3>Stay Connected</h3>
+                            <p>Get the latest articles and inspiring stories straight to your inbox.</p>
+                            
+                            <form onsubmit="handleSubscribe(event)" class="sub-input-group">
+                                <input type="email" id="subscriber-email" placeholder="Enter your email" required>
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🎯 FOOTER -->
+        <footer class="main-footer">
+            <div class="main-container footer-flex">
+                <div class="footer-brand">
+                    <div class="logo"><i class="fas fa-zebra" style="color: #4ade80;"></i> ZEBRION</div>
+                    <p>Articles about public figures</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-grid">
+                    <div>
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#" onclick="resetToHome(true); event.preventDefault();">Home</a></li>
+                            <li><a href="article.html">Articles</a></li>
+                            <li><a href="#" onclick="window.scrollTo({top: document.querySelector('.categories-browse-section').offsetTop, behavior: 'smooth'}); event.preventDefault();">Categories</a></li>
+                            <li><a href="#" onclick="showPage('about'); event.preventDefault();">About Us</a></li>
+                            <li><a href="#" onclick="showPage('contact'); event.preventDefault();">Contact</a></li>
+                            <li><a href="admin.html" style="opacity: 0.7; font-size: 13px;"><i class="fas fa-lock" style="margin-right: 5px;"></i> Admin Login</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Categories</h4>
+                        <ul>
+                            <li><a href="#">Politics</a></li>
+                            <li><a href="#">Entertainment</a></li>
+                            <li><a href="#">Sports</a></li>
+                            <li><a href="#">Business</a></li>
+                            <li><a href="#">Technology</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#" onclick="showPage('terms'); event.preventDefault();">Terms & Conditions</a></li>
+                            <li><a href="#" onclick="showPage('privacy'); event.preventDefault();">Privacy Policy</a></li>
+                            <li><a href="#" onclick="showPage('disclaimer'); event.preventDefault();">Disclaimer</a></li>
+                            <li><a href="#" onclick="showPage('faq'); event.preventDefault();">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Contact Us</h4>
+                        <ul class="contact-info-list">
+                            <li>
+                                <a href="mailto:info@zebrion.com" style="color: #cbdad2; text-decoration: none;">
+                                    <i class="far fa-envelope" style="margin-right: 8px;"></i> info@zebrion.com
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+9779800000000" style="color: #cbdad2; text-decoration: none;">
+                                    <i class="fas fa-phone" style="margin-right: 8px;"></i> +977 9800000000
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.google.com/maps/search/?api=1&query=Kathmandu,+Nepal" target="_blank" style="color: #cbdad2; text-decoration: none;">
+                                    <i class="fas fa-location-dot" style="margin-right: 8px;"></i> Kathmandu, Nepal
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Zebrion Pvt. Ltd. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 🎯 DETAIL PAGE -->
+    <div id="detail-page" class="hidden" style="display: none; background: #0c3d23;">
+        <main class="main-container" style="max-width: 850px; margin: 0 auto; padding-top: 30px;">
+            <button class="back-home-btn dynamic-back-btn" style="margin-bottom: 30px;" onclick="resetToHome(true)">
+                <i class="fas fa-arrow-left-long"></i> <span>Back to Articles</span>
+            </button>
+            <article class="full-article-view animate-now">
+                <div class="detail-img-box" style="width: 100%; max-height: 550px; border-radius: 16px; overflow: hidden; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); background: #022c17;">
+                    <img id="det-img" src="" alt="Article Image" style="width: 100%; height: auto; max-height: 550px; object-fit: cover; object-position: top;">
+                </div>
+                <div class="detail-header-meta" style="text-align: left; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 20px;">
+                    <span id="det-category" class="det-cat-tag">BIOGRAPHY</span>
+                    <h1 id="det-title" style="font-size: 38px; font-weight: 800; margin: 15px 0; color: #ffffff; line-height: 1.35;"></h1>
+                    <div class="meta-info-bar">
+                        <span><i class="fas fa-user-edit"></i> By <strong id="det-author" style="color: #4ade80;">Admin</strong></span>
+                        <span><i class="far fa-calendar-alt"></i> Published: <span id="det-pub-date">Today</span></span>
+                        <span><i class="fas fa-history"></i> Updated: <span id="det-up-date">Just Now</span></span>
+                        <span><i class="far fa-clock"></i> <span id="det-read-time">5 min read</span></span>
+                    </div>
+                    <div class="article-tools-bar">
+                        <div class="font-size-controls">
+                            <span>Font Size:</span>
+                            <button onclick="adjustFontSize(-2)"><i class="fas fa-minus"></i></button>
+                            <button onclick="adjustFontSize(0)">A</button>
+                            <button onclick="adjustFontSize(2)"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="share-buttons-group">
+                            <span>Share:</span>
+                            <button onclick="shareArticle('facebook')" class="share-btn fb"><i class="fab fa-facebook-f"></i></button>
+                            <button onclick="shareArticle('twitter')" class="share-btn tw"><i class="fab fa-twitter"></i></button>
+                            <button onclick="shareArticle('whatsapp')" class="share-btn wa"><i class="fab fa-whatsapp"></i></button>
+                            <button onclick="shareArticle('copy')" class="share-btn cp"><i class="fas fa-link"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="det-body" class="detail-content-text" style="font-size: 18px; line-height: 1.9; color: #e0e8e4; letter-spacing: 0.3px;"></div>
+            </article>
+        </main>
+    </div>
+
+    <!-- 🎯 ABOUT PAGE -->
+    <div id="about-page" class="hidden">
+        <main class="main-container">
+            <button class="back-home-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left-long"></i> <span>Back to Home</span>
+            </button>
+            <article class="full-article-view animate-now" style="margin-top: 20px;">
+                <div class="about-header-main" style="text-align: center; margin-bottom: 35px;">
+                    <h1 style="font-size: 36px; font-weight: 700; margin-bottom: 10px;">About Us</h1>
+                    <p class="about-subtitle" style="color: #cbdad2; font-size: 16px; font-style: italic;">Welcome to our platform, where every story has the power to inspire.</p>
+                </div>
+                <div class="about-main-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08) !important; border-radius: 20px; padding: 35px; margin-bottom: 30px;">
+                    <p style="font-size: 16px; color: #cbdad2; line-height: 1.8;">We are dedicated to publishing authentic, impactful, and meaningful articles that celebrate courage, innovation, resilience, and success.</p>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <!-- 🎯 CONTACT PAGE -->
+    <div id="contact-page" class="hidden">
+        <main class="main-container">
+            <button class="back-home-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left-long"></i> <span>Back to Home</span>
+            </button>
+            <article class="full-article-view animate-now" style="margin-top: 20px; max-width: 850px; margin-left: auto; margin-right: auto;">
+                <div style="text-align: center; margin-bottom: 35px;">
+                    <h1 style="font-size: 36px; font-weight: 700; margin-bottom: 10px;">Contact Us</h1>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
