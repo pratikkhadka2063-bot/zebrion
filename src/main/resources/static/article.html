@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 📱 SMART MOBILE VIEWPORT: यसले कुनै पनि मोबाइल स्क्रिनमा साइट काटिन वा जुम बिग्रिन दिँदैन -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>All Published Articles - Zebrion</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="background: #0c3d23; color: #ffffff; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; width: 100%;">
+
+    <div class="article-page-wrapper" style="width: 100%; box-sizing: border-box; overflow-x: hidden;">
+        
+        <!-- 🎯 HEADER SECTION (100% Mobile Responsive - कहिल्यै नखप्टिने) -->
+        <header class="page-header" style="text-align: center; padding: 25px 15px 20px 15px; background: rgba(0, 0, 0, 0.15); border-bottom: 1px solid rgba(255, 255, 255, 0.08); width: 100%; box-sizing: border-box; position: relative;">
+            <div class="header-container" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                
+                <!-- 🌟 Home Button: position relative र block दिएर ओभरल्याप पूर्ण रूपमा हटाइयो -->
+                <div style="width: 100%; display: flex; justify-content: flex-start; margin-bottom: 15px;">
+                    <a href="index.html" class="back-btn" style="position: relative !important; left: auto !important; top: auto !important; display: inline-flex !important; align-items: center; gap: 8px; color: #4ade80; text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 18px; background: rgba(255,255,255,0.08); border-radius: 25px; border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s ease;">
+                        <i class="fas fa-arrow-left"></i> Home
+                    </a>
+                </div>
+
+                <h1 style="font-size: clamp(24px, 6vw, 36px); margin: 0 0 8px 0; line-height: 1.2; font-weight: 700; letter-spacing: -0.5px; text-align: center;">All Published Articles</h1>
+                <p style="color: #cbdad2; font-size: clamp(13px, 3.5vw, 16px); margin: 0; text-align: center; max-width: 95%;">Browse through all inspiring biographies and stories</p>
+            </div>
+        </header>
+
+        <!-- 🔍 SEARCH, SORT, DATE, READING TIME & VIEW TOGGLE FILTER SECTION -->
+        <div class="filter-section" style="max-width: 950px; width: 100%; margin: 25px auto 25px auto; padding: 0 15px; box-sizing: border-box;">
+            
+            <!-- 1. Search Bar + Sort Dropdown -->
+            <div class="search-sort-wrapper" style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; width: 100%;">
+                <div class="search-box-wrapper" style="position: relative; flex: 1 1 100%; width: 100%;">
+                    <i class="fas fa-search" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #4ade80; font-size: 15px; pointer-events: none;"></i>
+                    <input type="text" id="article-page-search" 
+                           placeholder="Search by title, name, keyword, or tag..." 
+                           style="width: 100%; box-sizing: border-box; padding: 14px 18px 14px 45px; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 25px; color: #ffffff; font-size: 14.5px; outline: none; transition: all 0.3s ease;">
+                </div>
+
+                <div class="sort-box-wrapper" style="position: relative; flex: 1 1 100%; width: 100%;">
+                    <i class="fas fa-sort-amount-down" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #4ade80; font-size: 14px; pointer-events: none;"></i>
+                    <select id="article-page-sort" onchange="applyAllFilters()" 
+                            style="width: 100%; box-sizing: border-box; padding: 14px 18px 14px 42px; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 25px; color: #ffffff; font-size: 14px; font-weight: 600; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none;">
+                        <option value="latest" style="background: #022c17; color: #fff;">Sort: Latest</option>
+                        <option value="oldest" style="background: #022c17; color: #fff;">Sort: Oldest</option>
+                        <option value="views" style="background: #022c17; color: #fff;">Most Viewed</option>
+                        <option value="likes" style="background: #022c17; color: #fff;">Most Liked</option>
+                        <option value="trending" style="background: #022c17; color: #fff;">Trending</option>
+                        <option value="editors_pick" style="background: #022c17; color: #fff;">Editor's Pick</option>
+                    </select>
+                    <i class="fas fa-chevron-down" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #a3b8ad; font-size: 12px; pointer-events: none;"></i>
+                </div>
+            </div>
+
+            <!-- 2. Advanced Time & Date Filters Bar (अटो-अपडेट हुने Year Dropdown सहित) -->
+            <div class="adv-filter-box" style="display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; justify-content: center; background: rgba(255, 255, 255, 0.03); padding: 14px; border-radius: 18px; border: 1px dashed rgba(255, 255, 255, 0.1); width: 100%; box-sizing: border-box;">
+                <div style="position: relative; flex: 1 1 100%; min-width: 100px;">
+                    <select id="filter-year" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">All Years</option>
+                        <!-- बाँकी वर्षहरू JavaScript ले आफैँ डेटाबेस हेरेर थप्छ -->
+                    </select>
+                </div>
+
+                <div style="position: relative; flex: 1 1 100%; min-width: 100px;">
+                    <select id="filter-month" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">All Months</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+
+                <div style="position: relative; flex: 1 1 100%; min-width: 100px;">
+                    <select id="filter-read-time" onchange="applyAllFilters()" class="adv-select">
+                        <option value="ALL">Any Read Time</option>
+                        <option value="short">Under 3 min</option>
+                        <option value="medium">3 - 5 min</option>
+                        <option value="long">5+ min</option>
+                    </select>
+                </div>
+
+                <button onclick="resetAllAdvancedFilters()" class="reset-btn" style="background: rgba(255, 255, 255, 0.08); color: #cbdad2; border: 1px solid rgba(255, 255, 255, 0.15); padding: 10px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 5px; transition: all 0.2s ease;">
+                    <i class="fas fa-undo"></i> Reset Filters
+                </button>
+            </div>
+
+            <!-- 3. Category Filter Buttons -->
+            <div id="articles-page-cat-filters" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; width: 100%;">
+                <button class="art-cat-btn active" onclick="setCategoryFilter('ALL', this)">All</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('POLITICS', this)">Politics</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('ENTERTAINMENT', this)">Entertainment</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('SPORTS', this)">Sports</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('BUSINESS', this)">Business</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('EDUCATION', this)">Education</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('TECHNOLOGY', this)">Technology</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('INFLUENCERS', this)">Influencers</button>
+                <button class="art-cat-btn" onclick="setCategoryFilter('OTHER', this)">Other</button>
+            </div>
+
+            <!-- 🎯 4. GRID / LIST VIEW TOGGLE BAR -->
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 15px; width: 100%; box-sizing: border-box;">
+                <span style="color: #a3b8ad; font-size: 13px; font-weight: 600;">View:</span>
+                <button id="btn-view-list" class="view-toggle-btn active" onclick="switchViewMode('list')" title="List View">
+                    <i class="fas fa-list-ul"></i> <span>List</span>
+                </button>
+                <button id="btn-view-grid" class="view-toggle-btn" onclick="switchViewMode('grid')" title="Grid View">
+                    <i class="fas fa-th-large"></i> <span>Grid</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- 🎯 ARTICLES GRID / LIST CONTAINER -->
+        <main class="main-container" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 15px 30px 15px; box-sizing: border-box;">
+            <div id="all-articles-grid" class="view-mode-list" style="display: flex; flex-direction: column; gap: 18px; width: 100%; box-sizing: border-box;">
+            </div>
+            
+            <!-- 🌟 PAGINATION CONTROLS -->
+            <div id="pagination-wrapper" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 35px; margin-bottom: 40px; flex-wrap: wrap; width: 100%;">
+            </div>
+        </main>
+
+        <!-- ↑ SCROLL TO TOP BUTTON -->
+        <button class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                style="position: fixed; bottom: 20px; right: 20px; background: #4ade80; color: #0c3d23; border: none; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 99; display: flex; align-items: center; justify-content: center;">
+            ↑
+        </button>
+    </div>
+
+    <!-- 🟢 SCRIPTS FOR DATABASE FETCH, SEARCH, FILTER, SORT, VIEW TOGGLE & PAGINATION -->
+    <script>
+        const API_URL = "http://localhost:8080/api/articles";
+        let localArticles = [];
+        let activeCategory = 'ALL';
+
+        let currentPage = 1;
+        const ARTICLES_PER_PAGE = 6;
+        let currentFilteredArticles = [];
+        let currentViewMode = 'list';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadArticlesFromDB();
+            setupGridSearch();
+        });
+
+        function loadArticlesFromDB() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    localArticles = data;
+                    populateDynamicYears(data);
+                    applyAllFilters();
+                })
+                .catch(err => {
+                    console.error("Error connecting to backend database:", err);
+                    document.getElementById('all-articles-grid').innerHTML = 
+                        `<div style='text-align:center; width:100%; padding: 40px 15px; background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px dashed rgba(255,255,255,0.1); box-sizing: border-box;'>
+                            <i class="fas fa-exclamation-triangle" style="font-size: 28px; color: #ff6b6b; margin-bottom: 12px;"></i>
+                            <p style='color:#ff6b6b; font-weight:600; margin: 0 0 8px 0; font-size: 16px;'>Database Server चल्दै छैन!</p>
+                            <p style='color:#a3b8ad; font-size: 13.5px; margin: 0; line-height: 1.5;'>कृपया आफ्नो कम्प्युटरमा Spring Boot Backend (localhost:8080) चालु गर्नुहोस् वा अनलाइन सर्भरमा जोडिएको सुनिश्चित गर्नुहोस्।</p>
+                         </div>`;
+                });
+        }
+
+        function populateDynamicYears(articles) {
+            const yearSelect = document.getElementById('filter-year');
+            if (!yearSelect) return;
+
+            const yearsSet = new Set();
+            articles.forEach(art => {
+                const dateStr = art.publishDate || art.date || "2026-05-27";
+                const yearMatch = dateStr.match(/\d{4}/);
+                if (yearMatch) {
+                    yearsSet.add(yearMatch[0]);
+                }
+            });
+
+            const sortedYears = Array.from(yearsSet).sort().reverse();
+            
+            yearSelect.innerHTML = '<option value="ALL">All Years</option>';
+            sortedYears.forEach(year => {
+                const opt = document.createElement('option');
+                opt.value = year;
+                opt.textContent = year;
+                yearSelect.appendChild(opt);
+            });
+        }
+
+        function setCategoryFilter(category, buttonElement) {
+            activeCategory = category;
+            const allButtons = document.querySelectorAll('.art-cat-btn');
+            allButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = "rgba(255, 255, 255, 0.05)";
+                btn.style.color = "#cbdad2";
+            });
+
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+                buttonElement.style.background = "#4ade80";
+                buttonElement.style.color = "#0c3d23";
+            }
+
+            currentPage = 1;
+            applyAllFilters();
+        }
+
+        function resetAllAdvancedFilters() {
+            document.getElementById('article-page-search').value = "";
+            document.getElementById('filter-year').value = "ALL";
+            document.getElementById('filter-month').value = "ALL";
+            document.getElementById('filter-read-time').value = "ALL";
+            document.getElementById('article-page-sort').value = "latest";
+            currentPage = 1;
+            applyAllFilters();
+        }
+
+        function setupGridSearch() {
+            const searchInput = document.getElementById('article-page-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    currentPage = 1;
+                    applyAllFilters();
+                });
+            }
+        }
+
+        function switchViewMode(mode) {
+            currentViewMode = mode;
+            const listBtn = document.getElementById('btn-view-list');
+            const gridBtn = document.getElementById('btn-view-grid');
+            const gridContainer = document.getElementById('all-articles-grid');
+
+            if (mode === 'list') {
+                if (listBtn) listBtn.classList.add('active');
+                if (gridBtn) gridBtn.classList.remove('active');
+                if (gridContainer) {
+                    gridContainer.classList.remove('view-mode-grid');
+                    gridContainer.classList.add('view-mode-list');
+                }
+            } else {
+                if (gridBtn) gridBtn.classList.add('active');
+                if (listBtn) listBtn.classList.remove('active');
+                if (gridContainer) {
+                    gridContainer.classList.remove('view-mode-list');
+                    gridContainer.classList.add('view-mode-grid');
+                }
+            }
+            renderArticlesGrid();
+        }
+
+        function applyAllFilters() {
+            const searchInput = document.getElementById('article-page-search');
+            const sortSelect = document.getElementById('article-page-sort');
+            const yearSelect = document.getElementById('filter-year');
+            const monthSelect = document.getElementById('filter-month');
+            const readTimeSelect = document.getElementById('filter-read-time');
+            
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const sortType = sortSelect ? sortSelect.value : 'latest';
+            const selectedYear = yearSelect ? yearSelect.value : 'ALL';
+            const selectedMonth = monthSelect ? monthSelect.value : 'ALL';
+            const selectedReadTime = readTimeSelect ? readTimeSelect.value : 'ALL';
+
+            let filtered = localArticles.filter(art => {
+                const matchesCategory = (activeCategory === 'ALL') || 
+                                      (art.category && art.category.toUpperCase() === activeCategory);
+
+                const titleMatch = art.title ? art.title.toLowerCase().includes(query) : false;
+                const nameMatch = art.author ? art.author.toLowerCase().includes(query) : false;
+                const summaryMatch = art.summary ? art.summary.toLowerCase().includes(query) : false;
+                const contentMatch = art.content ? art.content.toLowerCase().includes(query) : false;
+                
+                let tagMatch = false;
+                if (art.tags) {
+                    if (Array.isArray(art.tags)) {
+                        tagMatch = art.tags.some(t => t.toLowerCase().includes(query));
+                    } else if (typeof art.tags === 'string') {
+                        tagMatch = art.tags.toLowerCase().includes(query);
+                    }
+                }
+
+                const matchesSearch = !query || titleMatch || nameMatch || summaryMatch || contentMatch || tagMatch;
+
+                const pubDateStr = art.publishDate || art.date || "2026-05-27";
+                const matchesYear = (selectedYear === 'ALL') || pubDateStr.includes(selectedYear);
+                
+                let matchesMonth = true;
+                if (selectedMonth !== 'ALL') {
+                    const monthNames = {
+                        "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun",
+                        "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+                    };
+                    matchesMonth = pubDateStr.includes(`-${selectedMonth}-`) || 
+                                   pubDateStr.toLowerCase().includes(monthNames[selectedMonth].toLowerCase());
+                }
+
+                let matchesReadTime = true;
+                if (selectedReadTime !== 'ALL') {
+                    const fullText = art.content || art.summary || '';
+                    const wordCount = fullText.trim().split(/\s+/).length;
+                    const readMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+                    if (selectedReadTime === 'short') matchesReadTime = (readMinutes < 3);
+                    else if (selectedReadTime === 'medium') matchesReadTime = (readMinutes >= 3 && readMinutes <= 5);
+                    else if (selectedReadTime === 'long') matchesReadTime = (readMinutes > 5);
+                }
+
+                return matchesCategory && matchesSearch && matchesYear && matchesMonth && matchesReadTime;
+            });
+
+            filtered.sort((a, b) => {
+                if (sortType === 'latest') return b.id - a.id;
+                else if (sortType === 'oldest') return a.id - b.id;
+                else if (sortType === 'views') return (b.views || 0) - (a.views || 0);
+                else if (sortType === 'likes') return (b.likes || 0) - (a.likes || 0);
+                else if (sortType === 'trending') {
+                    const trendB = (b.views || 0) + ((b.likes || 0) * 5);
+                    const trendA = (a.views || 0) + ((a.likes || 0) * 5);
+                    return trendB - trendA;
+                } else if (sortType === 'editors_pick') {
+                    const pickB = b.isEditorPick ? 1 : 0;
+                    const pickA = a.isEditorPick ? 1 : 0;
+                    if (pickB !== pickA) return pickB - pickA;
+                    return (b.views || 0) - (a.views || 0);
+                }
+                return 0;
+            });
+
+            currentFilteredArticles = filtered;
+            renderArticlesGrid();
+        }
+
+        function renderArticlesGrid() {
+            const grid = document.getElementById('all-articles-grid');
+            grid.innerHTML = "";
+
+            if (currentFilteredArticles.length === 0) {
+                grid.innerHTML = `<p style='text-align:center; width:100%; color:#cbdad2; padding: 40px 0;'>No articles found matching your selected filters.</p>`;
+                renderPaginationButtons(0);
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
+            const endIndex = startIndex + ARTICLES_PER_PAGE;
+            const articlesToShow = currentFilteredArticles.slice(startIndex, endIndex);
+
+            articlesToShow.forEach(art => {
+                const card = document.createElement('div');
+                card.className = 'article-row-card';
+                
+                // 🎯 मुख्य सुधार: पूरै कार्ड क्लिक गर्दा आर्टिकल खुल्ने र माउस लैजाँदा हात (Pointer) देखिने
+                card.onclick = () => {
+                    window.location.href = `index.html?id=${art.id}`;
+                };
+
+                let hoverLogic = "";
+                if (art.image2 && art.image2.trim() !== "") {
+                    hoverLogic = `
+                        onmouseover="const img = document.getElementById('grid-img-${art.id}'); img.style.opacity = '0.3'; setTimeout(() => { img.src='${art.image2}'; img.style.opacity = '1'; }, 150);"
+                        onmouseout="const img = document.getElementById('grid-img-${art.id}'); img.style.opacity = '0.3'; setTimeout(() => { img.src='${art.image}'; img.style.opacity = '1'; }, 150);"
+                    `;
+                }
+
+                const fullText = art.content || art.summary || '';
+                const wordCount = fullText.trim().split(/\s+/).length;
+                const readMinutes = Math.max(1, Math.ceil(wordCount / 200));
+                const displayDate = art.publishDate || art.date || "May 27, 2026";
+
+                if (currentViewMode === 'list') {
+                    // cursor: pointer थपिएको
+                    card.style.cssText = "display: flex; width: 100%; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; box-sizing: border-box; cursor: pointer;";
+                    card.innerHTML = `
+                        <div class="row-card-img" style="width: 280px; min-width: 280px; height: 190px;" ${hoverLogic}>
+                            <img id="grid-img-${art.id}" src="${art.image}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s ease;">
+                        </div>
+
+                        <div class="row-card-info" style="padding: 16px 20px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; box-sizing: border-box; width: 100%;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; width: 100%;">
+                                <span class="row-card-category" style="color: #4ade80; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                    <i class="far fa-bookmark"></i> ${art.category || 'BIOGRAPHY'}
+                                </span>
+                                ${art.isEditorPick ? '<span style="background: rgba(226, 177, 60, 0.2); color: #e2b13c; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px;"><i class="fas fa-star"></i> PICK</span>' : ''}
+                            </div>
+
+                            <h2 style="font-size: 18px; color: #ffffff; margin: 0 0 6px 0; font-weight: 600; line-height: 1.3;">${art.title}</h2>
+
+                            <p class="row-card-summary" style="color: #a3b8ad; font-size: 13.5px; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                ${art.summary || 'Click below to read the full details and history of this prominent figure.'}
+                            </p>
+
+                            <div style="margin-bottom: 12px;" onclick="event.stopPropagation();">
+                                ${renderHashtags(art.tags)}
+                            </div>
+
+                            <div class="row-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px; flex-wrap: wrap; gap: 10px; width: 100%;">
+                                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: #8da699; font-size: 12px;">
+                                    <span class="author-tag" style="color: #cbdad2; font-weight: 500;"><i class="far fa-user" style="color: #4ade80;"></i> ${art.author || 'Admin'}</span>
+                                    <span><i class="far fa-calendar-alt" style="color: #4ade80;"></i> ${displayDate}</span>
+                                    <span style="color: #4ade80; font-weight: 600;"><i class="far fa-clock"></i> ${readMinutes} min read</span>
+                                </div>
+                                <span class="row-read-more" style="color: #4ade80; font-weight: 600; font-size: 13.5px;">Read Story →</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // cursor: pointer थपिएको
+                    card.style.cssText = "display: flex; flex-direction: column; background: #062b17; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; height: 100%; box-sizing: border-box; width: 100%; cursor: pointer;";
+                    card.innerHTML = `
+                        <div class="row-card-img" style="width: 100%; height: 190px;" ${hoverLogic}>
+                            <img id="grid-img-${art.id}" src="${art.image}" alt="${art.title}" style="width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s ease;">
+                        </div>
+
+                        <div class="row-card-info" style="padding: 16px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; box-sizing: border-box; width: 100%;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; width: 100%;">
+                                    <span class="row-card-category" style="color: #4ade80; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        <i class="far fa-bookmark"></i> ${art.category || 'BIOGRAPHY'}
+                                    </span>
+                                    ${art.isEditorPick ? '<span style="background: rgba(226, 177, 60, 0.2); color: #e2b13c; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px;"><i class="fas fa-star"></i> PICK</span>' : ''}
+                                </div>
+
+                                <h2 style="font-size: 17px; color: #ffffff; margin: 0 0 8px 0; font-weight: 600; line-height: 1.35;">${art.title}</h2>
+
+                                <p class="row-card-summary" style="color: #a3b8ad; font-size: 13.5px; line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                    ${art.summary || 'Click below to read the full details and history of this prominent figure.'}
+                                </p>
+
+                                <div style="margin-bottom: 10px;" onclick="event.stopPropagation();">
+                                    ${renderHashtags(art.tags)}
+                                </div>
+                            </div>
+
+                            <div class="row-card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 10px; font-size: 12px; color: #8da699; width: 100%;">
+                                <span><i class="far fa-calendar-alt" style="color: #4ade80;"></i> ${displayDate}</span>
+                                <span style="color: #4ade80; font-weight: 600;"><i class="far fa-clock"></i> ${readMinutes} min read</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                grid.appendChild(card);
+            });
+
+            renderPaginationButtons(currentFilteredArticles.length);
+        }
+
+        function renderPaginationButtons(totalItems) {
+            const paginationWrapper = document.getElementById('pagination-wrapper');
+            paginationWrapper.innerHTML = "";
+
+            const totalPages = Math.ceil(totalItems / ARTICLES_PER_PAGE);
+            if (totalPages <= 1) return;
+
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.disabled = (currentPage === 1);
+            prevBtn.onclick = () => changePage(currentPage - 1);
+            paginationWrapper.appendChild(prevBtn);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.innerText = i;
+                pageBtn.onclick = () => changePage(i);
+                paginationWrapper.appendChild(pageBtn);
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = (currentPage === totalPages);
+            nextBtn.onclick = () => changePage(currentPage + 1);
+            paginationWrapper.appendChild(nextBtn);
+        }
+
+        function changePage(newPage) {
+            const totalPages = Math.ceil(currentFilteredArticles.length / ARTICLES_PER_PAGE);
+            if (newPage < 1 || newPage > totalPages) return;
+            
+            currentPage = newPage;
+            renderArticlesGrid();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        function renderHashtags(tagsInput) {
+            if (!tagsInput) return '';
+            
+            let tagsArray = [];
+            if (Array.isArray(tagsInput)) {
+                tagsArray = tagsInput;
+            } else if (typeof tagsInput === 'string') {
+                tagsArray = tagsInput.split(',').map(tag => tag.trim());
+            }
+
+            return tagsArray.map(tag => {
+                const cleanTag = tag.trim();
+                if (!cleanTag) return '';
+                return `
+                    <span onclick="searchByTag('${cleanTag}')" 
+                          style="display: inline-block; background: rgba(74, 222, 128, 0.15); color: #4ade80; border: 1px solid #4ade80; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-right: 5px; margin-top: 5px; cursor: pointer; transition: 0.2s;">
+                        ${cleanTag.startsWith('#') ? cleanTag : '#' + cleanTag}
+                    </span>
+                `;
+            }).join('');
+        }
+
+        function searchByTag(tag) {
+            const searchInput = document.getElementById('article-page-search');
+            if (searchInput) {
+                searchInput.value = tag;
+                currentPage = 1;
+                applyAllFilters();
+                window.scrollTo({ top: 250, behavior: 'smooth' });
+            }
+        }
+    </script>
+
+    <!-- 🎯 100% SMART & PROFESSIONAL MOBILE CSS (यसले style.css को बग आफैँ ओभरराइड गर्छ!) -->
+    <style>
+        * {
+            box-sizing: border-box !important;
+        }
+        body, html {
+            overflow-x: hidden !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .art-cat-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbdad2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .art-cat-btn:hover {
+            background: rgba(74, 222, 128, 0.2) !important;
+            color: #ffffff !important;
+            border-color: #4ade80;
+        }
+        .adv-select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+        .adv-select option {
+            background: #022c17;
+            color: #ffffff;
+        }
+        .article-row-card:hover {
+            background: #08351d !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .view-toggle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbdad2;
+            padding: 7px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .view-toggle-btn.active {
+            background: #4ade80 !important;
+            color: #0c3d23 !important;
+            border-color: #4ade80 !important;
+        }
+        .view-mode-list {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+        }
+        .view-mode-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+        }
+        .page-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbdad2;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-btn.active {
+            background: #4ade80 !important;
+            color: #0c3d23 !important;
+            border-color: #4ade80 !important;
+        }
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* 📱 100% SMARTPHONE PORTAL FIXES (कुनै पनि मोबाइलमा नबिग्रिने) */
+        @media (max-width: 900px) {
+            .view-mode-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 650px) {
+            .view-mode-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .article-row-card {
+                flex-direction: column !important;
+                width: 100% !important;
+            }
+            .row-card-img {
+                width: 100% !important;
+                min-width: 100% !important;
+                height: 200px !important;
+            }
+            .search-sort-wrapper {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .search-box-wrapper, .sort-box-wrapper {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+            }
+            .adv-filter-box {
+                flex-direction: column !important;
+                gap: 10px !important;
+                padding: 12px !important;
+            }
+            .adv-filter-box > div {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+            }
+            .page-header h1 {
+                font-size: 26px !important;
+            }
+            .row-card-footer {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 10px !important;
+            }
+            .row-read-more {
+                align-self: flex-end !important;
+            }
+        }
+        /* =========================================================
+   🌟 ALL PUBLISHED ARTICLES - HOME BUTTON HOVER ANIMATION
+   ========================================================= */
+.back-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #4ade80 !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 8px 18px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 25px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+/* 🎯 माउस लैजाँदा सेतो ब्याकग्राउन्ड आउने र अक्षर गाढा हरियो हुने एनिमेसन */
+.back-btn:hover {
+    background: #ffffff !important;
+    color: #0c3d23 !important;
+    border-color: #ffffff !important;
+    transform: translateX(-4px) !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25) !important;
+}
+
+.back-btn i {
+    transition: transform 0.2s ease !important;
+}
+
+.back-btn:hover i {
+    transform: translateX(-3px) !important;
+}
+    </style>
+
+</body>
+</html>
